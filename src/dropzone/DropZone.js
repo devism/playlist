@@ -7,13 +7,22 @@ import  firebaseConfig from "./config";
 
 
 
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+
+ }else {
+    firebase.app(); // if already initialized, use that one
+ }
 
 let fb_storage = firebase.storage();
 let storageRef = fb_storage.ref();  
 
 
 const DropZone = () => {
+
+let playlistName = '';    
 
 const [validFiles, setValidFiles] = useState([]);    
 const [selectedFiles, setSelectedFiles] = useState([]);
@@ -142,11 +151,11 @@ const dragOver = (e) => {
         uploadRef.current.innerHTML = 'File(s) Uploading...';
 
        
-
-
+        playlistName = document.getElementById('playlistName').value;
+        console.log(playlistName);
         for (let i = 0; i < validFiles.length; i++) {
             
-            var audioRef = storageRef.child(validFiles[i]['name']);
+            var audioRef = storageRef.child(playlistName + '/' + validFiles[i]['name']);
 
             let audioFile = validFiles[i];
             var uploadTask = audioRef.put(audioFile);
@@ -176,6 +185,7 @@ const dragOver = (e) => {
     return (
      <>   
     <div className="container">
+        <input id="playlistName" placeholder="Enter Playlist Name" type="text"/>
         {unsupportedFiles.length === 0 && validFiles.length ? <button className="file-upload-btn" onClick={() => uploadFiles()}>Upload Files</button> : ''} 
 {unsupportedFiles.length ? <p>Please remove all unsupported files.</p> : ''}
         <div className="drop-container" 
