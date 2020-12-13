@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+#config
+/src/dropzone/config.js
+
 # testing
 /coverage
 

@@ -2,16 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './DropZone.css';
 import firebase from "firebase/app";
 import storage from "firebase/storage";
+import  firebaseConfig from "./config";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBjwtcXxoiUF41VpnL8Pzeqn-l7mfUrE10",
-    authDomain: "playlist-fdecb.firebaseapp.com",
-    projectId: "playlist-fdecb",
-    storageBucket: "playlist-fdecb.appspot.com",
-    messagingSenderId: "916497446055",
-    appId: "1:916497446055:web:4cf71e63ba31608120d782",
-    measurementId: "G-JLZET9BL7X"
-  };
 
 
 
