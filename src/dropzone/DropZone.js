@@ -164,6 +164,7 @@ const dragOver = (e) => {
             }, function(){
                 // handle successful upload
                 document.querySelector('.upload-modal').style.display = 'none';
+                setValidFiles([]);
             }
 
         )
