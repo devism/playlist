@@ -19,7 +19,6 @@ let rootRef = storageRef.root;
 
 let folders = [];
 
-   
 
 const PlayListLinks = () =>{
 
