@@ -18,51 +18,79 @@ if (!firebase.apps.length) {
 
 let fb_storage = firebase.storage();
 let storageRef = fb_storage.ref();  
-
+let rootRef = storageRef.root;
 
 const DropZone = () => {
 
-let playlistName = '';    
 
-const [validFiles, setValidFiles] = useState([]);    
-const [selectedFiles, setSelectedFiles] = useState([]);
-const [errorMessage, setErrorMessage] = useState(''); 
-const [unsupportedFiles, setUnsupportedFiles] = useState([]);
-const fileInputRef = useRef();
+    let playlistName = '';    
 
-useEffect(() => {
-    let filteredArray = selectedFiles.reduce((file, current) => {
-        const x = file.find(item => item.name === current.name);
-        if (!x) {
-            return file.concat([current]);
-        } else {
-            return file;
-        }
-    }, []);
-    setValidFiles([...filteredArray]);
+    const [validFiles, setValidFiles] = useState([]);    
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(''); 
+    const [unsupportedFiles, setUnsupportedFiles] = useState([]);
+    const fileInputRef = useRef();
 
-}, [selectedFiles]);
+    const [folders, setFolders] = useState([]);   
 
-const dragOver = (e) => {
-    e.preventDefault();
+    const displayLinks = () =>{
+        rootRef.listAll().then(function(res) {
+            let temp = [];
+            res.prefixes.forEach(function(folderRef) {
+                // console.log(folderRef.name)
+                temp.push(folderRef.name)
+                
+                // All the prefixes under listRef.
+                // You may call listAll() recursively on them.
+            });
+            setFolders(temp);
+            res.items.forEach(function(itemRef) {
+                // All the items under listRef.
+                // console.log(itemRef.name);
+            });
+            }).catch(function(error) {
+            // Uh-oh, an error occurred!
+            }); 
     }
-      
-    const dragEnter = (e) => {
-    e.preventDefault();
-    }
-      
-    const dragLeave = (e) => {
-    e.preventDefault();
-    }
-    
-    const fileDrop = (e) => {
+
+
+    useEffect(()=>{
+        displayLinks();
+    },[])
+
+    useEffect(() => {
+        let filteredArray = selectedFiles.reduce((file, current) => {
+            const x = file.find(item => item.name === current.name);
+            if (!x) {
+                return file.concat([current]);
+            } else {
+                return file;
+            }
+        }, []);
+        setValidFiles([...filteredArray]);
+
+    }, [selectedFiles]);
+
+    const dragOver = (e) => {
         e.preventDefault();
-        const files = e.dataTransfer.files;
-        console.log(files);
-        if (files.length) {
-            handleFiles(files);
         }
-    }
+        
+        const dragEnter = (e) => {
+        e.preventDefault();
+        }
+        
+        const dragLeave = (e) => {
+        e.preventDefault();
+        }
+        
+        const fileDrop = (e) => {
+            e.preventDefault();
+            const files = e.dataTransfer.files;
+            console.log(files);
+            if (files.length) {
+                handleFiles(files);
+            }
+        }
 
  
       
@@ -173,7 +201,12 @@ const dragOver = (e) => {
             }, function(){
                 // handle successful upload
                 document.querySelector('.upload-modal').style.display = 'none';
+                document.getElementById('playlistName').value = '';
                 setValidFiles([]);
+                setSelectedFiles([])
+                displayLinks();
+                    
+
             }
 
         )
@@ -184,6 +217,11 @@ const dragOver = (e) => {
 
     return (
      <>   
+     <ul>
+        {folders.map((folder, index) => {
+            return <li key={index}> {folder}</li>
+        })}
+    </ul>
     <div className="container">
         <input id="playlistName" placeholder="Enter Playlist Name" type="text"/>
         {unsupportedFiles.length === 0 && validFiles.length ? <button className="file-upload-btn" onClick={() => uploadFiles()}>Upload Files</button> : ''} 

@@ -10,7 +10,7 @@ function App() {
   return (
     <div>
         <div className="content">
-          <PlayListLinks/>
+          {/* <PlayListLinks/> */}
           <DropZone/>
         </div>
     </div>

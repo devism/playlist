@@ -17,34 +17,40 @@ let storageRef = fb_storage.ref();
 
 let rootRef = storageRef.root;
 
-let folders = [];
+// let folders = [];
 
 
 const PlayListLinks = () =>{
 
-const [folders, setFolders] = useState([]);    
+    const [folders, setFolders] = useState([]);    
 
-useEffect(() => {
-    rootRef.listAll().then(function(res) {
-        let temp = [];
-        res.prefixes.forEach(function(folderRef) {
-            // console.log(folderRef.name)
-            temp.push(folderRef.name)
-            
-            // All the prefixes under listRef.
-            // You may call listAll() recursively on them.
-        });
-        setFolders(temp);
-        res.items.forEach(function(itemRef) {
-            // All the items under listRef.
-            // console.log(itemRef.name);
-        });
-        }).catch(function(error) {
-        // Uh-oh, an error occurred!
-        }); 
-},[])
+
+    const displayLinks = () =>{
+        rootRef.listAll().then(function(res) {
+            let temp = [];
+            res.prefixes.forEach(function(folderRef) {
+                // console.log(folderRef.name)
+                temp.push(folderRef.name)
+                
+                // All the prefixes under listRef.
+                // You may call listAll() recursively on them.
+            });
+            setFolders(temp);
+            res.items.forEach(function(itemRef) {
+                // All the items under listRef.
+                // console.log(itemRef.name);
+            });
+            }).catch(function(error) {
+            // Uh-oh, an error occurred!
+            }); 
+    }
+
+
+    useEffect(()=>{
+        displayLinks();
+    },[])
    
-console.log(folders);
+// console.log(folders);
 
     return(
         <>
