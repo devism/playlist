@@ -6,6 +6,33 @@
     text-align: center;
 }
 
+.delete-btn{
+    order: 1px solid;
+    font-size: 0.6em;
+    padding: 0.2em;
+    background: #ec5e5e;
+    color: white;
+    font-weight: 900;
+    cursor: pointer;
+    margin-left: 6em;
+    float: right;
+    border-radius: 44px;
+    width: 12px;
+    height: 13px;
+    align-items: ;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 2px 2px 5px grey;
+}
+
+ul{
+    list-style-type: none;
+    display: inline-block;
+}
+li {
+    margin: 1em;
+}
+
 .drop-container {
     display: flex;
     align-items: center;

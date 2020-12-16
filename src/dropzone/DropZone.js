@@ -214,12 +214,53 @@ const DropZone = () => {
        
     }
 
+    const removeFolder = (folderName) => {
+        console.log(folderName);
+
+        // let storageRef = fb_storage.ref();  
+        // let rootRef = storageRef.root;
+        console.log(firebase.storage());
+
+
+        let ref = firebase.storage().ref(folderName);
+        ref.listAll().then(dir => {
+          dir.items.forEach(fileRef => {
+            var dirRef = firebase.storage().ref(fileRef.fullPath);
+            dirRef.getDownloadURL().then(function(url) {
+              var fileRef = firebase.storage().refFromURL(url);
+              fileRef.delete().then(function() {
+                // File deleted successfully 
+                displayLinks();
+              }).catch(function(error) {
+                // There has been an error      
+              });
+            });
+          });
+        }).catch(error => {
+          console.log(error);
+        });
+
+
+
+        // var folderRef = storageRef.child(folderName);
+
+        // // Delete the file
+        // folderRef.delete().then(function() {
+        //     // File deleted successfully
+        //     // redownload the current folders
+        //     displayLinks();
+        // }).catch(function(error) {
+        //     // Uh-oh, an error occurred!
+        // });       
+        
+    }
+
 
     return (
      <>   
      <ul>
         {folders.map((folder, index) => {
-            return <li key={index}> {folder}</li>
+            return <li key={index}> https://plylist.com/{folder} <span className="delete-btn" onClick={ () => removeFolder(folder)}>x</span></li>
         })}
     </ul>
     <div className="container">
