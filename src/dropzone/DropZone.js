@@ -219,7 +219,7 @@ const DropZone = () => {
 
         // let storageRef = fb_storage.ref();  
         // let rootRef = storageRef.root;
-        console.log(firebase.storage());
+        // console.log(firebase.storage());
 
 
         let ref = firebase.storage().ref(folderName);
