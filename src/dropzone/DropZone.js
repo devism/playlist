@@ -3,9 +3,16 @@ import './DropZone.css';
 import firebase from "firebase/app";
 import storage from "firebase/storage";
 import  firebaseConfig from "./config";
+import FolderPage from "../folderPage/FolderPage";
 
-
-
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useRouteMatch,
+    BrowserRouter
+  } from "react-router-dom";
 
 // firebase.initializeApp(firebaseConfig);
 
@@ -19,6 +26,8 @@ if (!firebase.apps.length) {
 let fb_storage = firebase.storage();
 let storageRef = fb_storage.ref();  
 let rootRef = storageRef.root;
+
+
 
 const DropZone = () => {
 
@@ -255,14 +264,44 @@ const DropZone = () => {
         
     }
 
+   
 
+    // const Links = () => {
+    //   return (
+    //       <>  
+    //         {folders.map((folder, index) => {
+    //             return (
+    //                 <div className="audioLinks" key={index}>
+    //                     <Link to={folder}> {folder} <span className="delete-btn" onClick={ () => removeFolder(folder)}>x</span></Link>
+    //                 </div>
+    //             ) 
+    //         })}
+    //       </>  
+    //     )  
+    // }
+
+   
     return (
-     <>   
-     <ul>
+     <>
+
+     {/* <Router>
+        <Route path="/" component={Links}/>
+        <Route path="/:folder" component={FolderPage}/>
+     </Router>  */}
+
+     {folders.map((folder, index) => {
+                return (
+                    <div className="audioLinks" key={index}>
+                        <Link to={`/user/${folder}`}> {folder} <span className="delete-btn" onClick={ () => removeFolder(folder)}>x</span></Link>
+                    </div>
+                ) 
+        })}   
+
+     {/* <div className="audioLinks">
         {folders.map((folder, index) => {
-            return <li key={index}> https://plylist.com/{folder} <span className="delete-btn" onClick={ () => removeFolder(folder)}>x</span></li>
+            return <a key={index} href={folder} > {folder} <span className="delete-btn" onClick={ () => removeFolder(folder)}>x</span></a>
         })}
-    </ul>
+    </div> */}
     <div className="container">
         <input id="playlistName" placeholder="Enter Playlist Name" type="text"/>
         {unsupportedFiles.length === 0 && validFiles.length ? <button className="file-upload-btn" onClick={() => uploadFiles()}>Upload Files</button> : ''} 
