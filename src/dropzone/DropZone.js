@@ -292,7 +292,8 @@ const DropZone = () => {
      {folders.map((folder, index) => {
                 return (
                     <div className="audioLinks" key={index}>
-                        <Link to={`/user/${folder}`}> {folder} <span className="delete-btn" onClick={ () => removeFolder(folder)}>x</span></Link>
+                        <Link to={`/user/${folder}`}> {folder} </Link>
+                        <span className="delete-btn" onClick={ () => removeFolder(folder)}>x</span>
                     </div>
                 ) 
         })}   

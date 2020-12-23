@@ -29,14 +29,17 @@ ul{
 }
 
 .audioLinks{
-    display: grid;
+    display: inline-block;
+    margin: 1em;
+    padding: 0.2em;
+    border-radius: 5px;
+    border: 1px solid;
 }
 
 a {
-    margin: 1em;
-    border: 1px solid #d6d6d6;
     padding: 0.2em;
     border-radius: 5px;
+    text-decoration: none;
 }
 
 .drop-container {
